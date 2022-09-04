@@ -17,62 +17,39 @@ void PrintArray2Dim(int[,] array)
         Console.WriteLine();
     }
 }
-// void WriteElArray(int[,] array)
-// {
-//     arrayRxC[row, column] = arrayElForArray[step + 1];
-//     step++;
-// }
+int[,] FillSpiralArray(int[,] arr, int step, int numR, int numC, int rowArr, int colArr)
+{
+    int i = numR; int j = numR;
+    for (j = numC; j < rowArr - 1; j++)
+    {
+        arr[i, j] = step;
+        step++;
+    }
+    for (i = numR; i < colArr - 1; i++)
+    {
+        arr[i, j] = step;
+        step++;
+    }
+    for (j = rowArr - 1; j > numC; j--)
+    {
+        arr[i, j] = step;
+        step++;
+    }
+    for (i = colArr - 1; i > numR; i--)
+    {
+        arr[i, j] = step;
+        step++;
+    }
+    return arr;
+}
 
 Console.Clear();
 int rowArray = 4;
 int columnArray = 4;
 int[,] arrayRxC = new int[rowArray, columnArray];
 
-//Закручиваем спираль - заполняем значениями квадратный массив
-int step = 0;
-int row = 0; int column = 0;
-for (column = 0; column < rowArray - 1; column++)
-{
-    arrayRxC[row, column] = step + 1;
-    step++;
-}
-for (row = 0; row < columnArray-1; row++)
-{
-    arrayRxC[row, column] = step + 1;
-    step++;
-}
-for (column = rowArray-1; column > 0; column--)
-{
-    arrayRxC[row, column] = step + 1;
-    step++;
-}
-for (row = columnArray-1; row > 0; row--)
-{
-    arrayRxC[row, column] = step + 1;
-    step++;
-}
+FillSpiralArray(arrayRxC, step: 1, numR: 0, numC: 0, rowArray, columnArray); // наружнее кольцо с элемента 0,0
+FillSpiralArray(arrayRxC, step: 1+4*(rowArray-1), numR: 1, numC: 1, rowArray-1, columnArray-1); // внутреннее кольцо с элемента 1,1
 
-//Заполнена первая линия, заполняем вторую
-row = 1; column = 1;
-for (column = 1; column < rowArray - 2; column++)
-{
-    arrayRxC[row, column] = step + 1;
-    step++;
-}
-for (row = 1; row < columnArray-2; row++)
-{
-    arrayRxC[row, column] = step + 1;
-    step++;
-}
-for (column = rowArray-2; column > 1; column--)
-{
-    arrayRxC[row, column] = step + 1;
-    step++;
-}
-for (row = columnArray-2; row > 1; row--)
-{
-    arrayRxC[row, column] = step + 1;
-    step++;
-}
 Console.WriteLine($"Квадратный массив {rowArray}x{columnArray}, заполненный спирально (по ч.с.)");
 PrintArray2Dim(arrayRxC);
